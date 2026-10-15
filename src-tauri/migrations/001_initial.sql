@@ -1,0 +1,13 @@
+PRAGMA foreign_keys=ON;
+CREATE TABLE IF NOT EXISTS schema_migrations(version INTEGER PRIMARY KEY);
+CREATE TABLE IF NOT EXISTS providers(id TEXT PRIMARY KEY, supported INTEGER NOT NULL);
+INSERT OR IGNORE INTO providers VALUES ('codex',1),('claude-code',0),('deepseek',0),('glm',0),('kimi',0);
+CREATE TABLE IF NOT EXISTS accounts(id TEXT PRIMARY KEY, provider TEXT NOT NULL REFERENCES providers(id));
+CREATE TABLE IF NOT EXISTS projects(id TEXT PRIMARY KEY, name TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS sessions(id TEXT PRIMARY KEY, source_id TEXT NOT NULL, account_id TEXT NOT NULL REFERENCES accounts(id), project_id TEXT REFERENCES projects(id), parent_id TEXT);
+CREATE TABLE IF NOT EXISTS turns(id TEXT NOT NULL, session_id TEXT NOT NULL REFERENCES sessions(id), PRIMARY KEY(id,session_id));
+CREATE TABLE IF NOT EXISTS usage_events(id TEXT PRIMARY KEY, session_id TEXT NOT NULL REFERENCES sessions(id), event_at TEXT NOT NULL, collected_at TEXT NOT NULL, model TEXT, turn_id TEXT, raw_total TEXT NOT NULL, raw_last TEXT, delta TEXT, quality TEXT NOT NULL DEFAULT 'pending', epoch INTEGER NOT NULL DEFAULT 0);
+CREATE INDEX IF NOT EXISTS usage_session_time ON usage_events(session_id,event_at,id);
+CREATE TABLE IF NOT EXISTS ingest_checkpoints(path TEXT PRIMARY KEY, offset INTEGER NOT NULL, anchor TEXT NOT NULL, state TEXT NOT NULL, errors INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS quota_snapshots(id INTEGER PRIMARY KEY, account_id TEXT NOT NULL REFERENCES accounts(id), collected_at TEXT NOT NULL, source TEXT NOT NULL, payload TEXT NOT NULL);
+INSERT OR IGNORE INTO schema_migrations VALUES(1);

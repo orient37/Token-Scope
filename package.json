@@ -1,0 +1,53 @@
+{
+  "name": "tokenscope",
+  "version": "0.5.16",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "tauri": "tauri",
+    "desktop": "tauri dev --features desktop",
+    "build:desktop": "tauri build --features desktop",
+    "test": "vitest run",
+    "format": "prettier --write src",
+    "test:desktop": "node tests/desktop-smoke.mjs",
+    "test:output:desktop": "node tests/output-rate-desktop.mjs",
+    "test:soak": "node tests/soak.mjs",
+    "test:million:desktop": "node tests/million-desktop.mjs",
+    "test:alerts:desktop": "node tests/alerts-desktop.mjs",
+    "test:reports:desktop": "node tests/reports-desktop.mjs",
+    "test:quota:shell": "node tests/quota-shell-desktop.mjs",
+    "test:account:desktop": "node tests/account-desktop.mjs"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.1.0",
+    "@tauri-apps/api": "^2.0.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "echarts": "^5.6.0",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.6.0",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "@tauri-apps/cli": "^2.0.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "prettier": "^3.4.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0",
+    "vitest": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=20.18.0"
+  }
+}

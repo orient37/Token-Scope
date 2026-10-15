@@ -1,0 +1,10 @@
+{
+  "identifier": "default",
+  "description": "Local dashboard",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default"
+  ]
+}
